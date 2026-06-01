@@ -1,6 +1,10 @@
 @import "tailwindcss";
-@utility active {
-  font-weight: bold;
-  color: #ef4444; /* Tailwind's red-500 */
-  font-size: 20px;
+
+@layer components{
+.active {
+  @apply font-bold text-blue-500;
+}
+.header {
+  @apply text-2xl font-bold mb-4;   
+}
 }

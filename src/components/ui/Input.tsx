@@ -2,8 +2,8 @@ import React from 'react'
 
 function Input(props: { type: string, placeholder: string }) {
   return (
-    <input type={props.type} placeholder={props.placeholder} />
-    
+    <input className='w-full h-12 shadow-md rounded border p-2' type={props.type} placeholder={props.placeholder} />
+
   )
 }
 
