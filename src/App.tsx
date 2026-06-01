@@ -3,13 +3,13 @@
 
 import {RouterProvider, createRouter} from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen';
-
-function App() {
-
- const router = createRouter({
+const router = createRouter({
   routeTree,
   
 })
+function App() {
+
+ 
 
 
   return (
