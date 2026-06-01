@@ -3,7 +3,7 @@ import {Link} from '@tanstack/react-router'
 export default function Navbar() {
   return (
     <nav>
-      <Link activeProps={{ className: 'active' }} to="/">
+      <Link activeProps={{ className: 'active' }}  to="/">
         Home
       </Link>
       <Link activeProps={{ className: 'active' }} to="/register">
