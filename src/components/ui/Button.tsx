@@ -1,9 +1,11 @@
-import React from 'react'
 
-function Button(props: { label: string }) {
-    console.log('Button rendered', props.label)
+
+function Button(props: { label: string, disabled?: boolean, onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void }) {
+    console.log('Button rendered', props.label,props.disabled)
   return (
-    <button className="bg-blue-500 text-white px-4 py-2 rounded">{props.label}</button>
+    <button onClick={props.onClick} className={props.disabled ? "bg-gray-300 text-gray-100 px-4 py-2 rounded" : "bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"} disabled={props.disabled}>
+      {props.label}
+    </button>
   )
 }
 
