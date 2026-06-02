@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { Task } from '../types/task.type'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 
 function TaskPage() {
-  const [taskslist, setTaskslist] = React.useState<Task[]>([])
+  const [taskslist, setTaskslist] = React.useState<Task[]>(() => {
+    const savedTasks = localStorage.getItem('tasks')
+    return savedTasks ? JSON.parse(savedTasks) : []
+  })
   const [task,setTask] = React.useState({title: ''})
   const [taskCounter, setTaskCounter] = React.useState(0)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +17,14 @@ function TaskPage() {
         
     )
   }
+  
+useEffect(() => {
+    console.log('Taskslist changed', taskslist,localStorage.getItem('tasks'))
+  localStorage.setItem(
+    'tasks',
+    JSON.stringify(taskslist)
+  )
+}, [taskslist])
   const handlesubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log('Button clicked', task)
     task.title = task.title.trim()
