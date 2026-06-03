@@ -46,12 +46,14 @@ const handleDelete = (id: number) => {
         <ul  className='mt-4'>
             {taskslist.map((task)=>
             < React.Fragment key={task.id}>
-            <Link to={`/tasks/${task.id}`} >
             <li  className='border-b py-2'>
+                          <Link to={`/tasks/${task.id}`} >
+
                 {task.title}
+                            </Link>
+
                 {task.completed ? <span className='text-green-500 ml-2'>(Completed)</span> : <span className='text-red-500 ml-2'>(Pending)</span>}
             </li>
-            </Link>
             <Button label="Delete" onClick={()=>{handleDelete(task.id)}} />
             <Button label="Complete" onClick={()=>{setTaskslist(prev=>prev.map(t=>t.id === task.id ? {...t, completed: !t.completed} : t))}} />
 
