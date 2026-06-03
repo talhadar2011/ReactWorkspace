@@ -1,48 +1,36 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import type { Task } from '../types/task.type'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
+import { useLocalStorage } from '../hooks/TaskStorage.hook'
 
 function TaskPage() {
-  const [taskslist, setTaskslist] = React.useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem('tasks')
-    return savedTasks ? JSON.parse(savedTasks) : []
-  })
+
+  const [taskslist, setTaskslist] = useLocalStorage<Task[]>("Task",[])
   const [task,setTask] = React.useState({title: ''})
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Input changed', e.target.name, e.target.value)
     setTask(
         {title: e.target.value}
         
     )
   }
-  
-useEffect(() => {
-    console.log('Taskslist changed', taskslist,localStorage.getItem('tasks'))
-  localStorage.setItem(
-    'tasks',
-    JSON.stringify(taskslist)
-  )
-}, [taskslist])
+
   const handlesubmit = () => {
-    console.log('Button clicked', task)
     const trimmedTitle = task.title.trim()
 
 if (!trimmedTitle) {
   alert('Task title cannot be empty')
   return
 }
-    setTaskslist(prev=>([...prev,{
-        id: Math.random(),
+    setTaskslist(prev => ([...prev, {
+        id: Date.now(),
         title: trimmedTitle,
         completed: false,
         createdAt: new Date(),
     }]))
     setTask({title: ''})
 }
-useEffect(() => {
-    console.log('Task Page Mounted', )
-}, [])
+
 const handleDelete = (id: number) => {
     setTaskslist(prev => prev.filter(t => t.id !== id))
 }
