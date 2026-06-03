@@ -3,6 +3,7 @@ import type { Task } from '../types/task.type'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import { useLocalStorage } from '../hooks/TaskStorage.hook'
+import { Link } from '@tanstack/react-router'
 
 function TaskPage() {
 
@@ -26,7 +27,7 @@ if (!trimmedTitle) {
         id: Date.now(),
         title: trimmedTitle,
         completed: false,
-        createdAt: new Date(),
+        createdAt: Date.now(),
     }]))
     setTask({title: ''})
 }
@@ -42,13 +43,15 @@ const handleDelete = (id: number) => {
         <Input type="text" placeholder="Task title" name="title" value={task?.title } onChange={(e)=>handleInputChange(e)} />
         <button onClick={handlesubmit} className='bg-blue-500 text-white px-4 py-2 rounded mt-2'>Add Task</button>
         {taskslist.length === 0 && <p className='mt-4 text-gray-500'>No tasks added yet.</p>}
-        <ul className='mt-4'>
+        <ul  className='mt-4'>
             {taskslist.map((task)=>
             < React.Fragment key={task.id}>
+            <Link to={`/tasks/${task.id}`} >
             <li  className='border-b py-2'>
                 {task.title}
                 {task.completed ? <span className='text-green-500 ml-2'>(Completed)</span> : <span className='text-red-500 ml-2'>(Pending)</span>}
             </li>
+            </Link>
             <Button label="Delete" onClick={()=>{handleDelete(task.id)}} />
             <Button label="Complete" onClick={()=>{setTaskslist(prev=>prev.map(t=>t.id === task.id ? {...t, completed: !t.completed} : t))}} />
 
