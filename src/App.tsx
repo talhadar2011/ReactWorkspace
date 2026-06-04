@@ -1,22 +1,18 @@
-
-
-
-import {RouterProvider, createRouter} from '@tanstack/react-router'
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
+import { TaskProvider } from './context/TasksContext';
+
 const router = createRouter({
   routeTree,
-  
 })
+
 function App() {
-
- 
-
-
   return (
-    <>
-     <RouterProvider router={router}>
-     </RouterProvider>
-    </>
+    
+    <TaskProvider>
+     <RouterProvider router={router}/>
+    </TaskProvider>
+    
   )
 }
 

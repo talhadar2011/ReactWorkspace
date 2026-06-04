@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 
-export const useLocalStorage  =<T>(key:string,initialValue:T)=>{
+export const useLocalStorage  =<T,>(key:string,initialValue:T) => {
     const [value,setValue]=useState<T>(()=>{
         const savedValue = localStorage.getItem(key)
         return savedValue ? JSON.parse(savedValue) : initialValue
