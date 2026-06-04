@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useLocalStorage } from '../../hooks/TaskStorage.hook'
 import type { Task } from '../../types/task.type'
+import { useTasks } from '../../context/TasksContext'
 
 export const Route = createFileRoute('/tasks/$taskId')({
   component: TaskComponent,
@@ -9,7 +10,8 @@ export const Route = createFileRoute('/tasks/$taskId')({
 
 function TaskComponent() {
   const { taskId } = Route.useParams()
-  const [taskslist] = useLocalStorage<Task[]>("Task",[])
+  const {taskslist} =useTasks()
+  console.log('TaskComponent rendered', taskId, taskslist)
   const task = taskslist.find(t => t.id === Number(taskId))
   return (
     <div className="p-4">

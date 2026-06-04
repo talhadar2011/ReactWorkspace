@@ -3,8 +3,11 @@ import { useLocalStorage } from '../hooks/TaskStorage.hook';
 import type { Task } from '../types/task.type';
 
 
-
-export const TaskContext = createContext(null);
+interface TaskContextType {
+  taskslist: Task[];
+  setTaskslist: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+export const TaskContext = createContext<TaskContextType | null>(null);
 
 
 export function TaskProvider({children}: {children: React.ReactNode}) {

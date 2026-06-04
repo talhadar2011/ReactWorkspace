@@ -4,10 +4,11 @@ import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import { useLocalStorage } from '../hooks/TaskStorage.hook'
 import { Link } from '@tanstack/react-router'
+import { useTasks } from '../context/TasksContext'
 
 function TaskPage() {
 
-  const [taskslist, setTaskslist] = useLocalStorage<Task[]>("Task",[])
+  const {taskslist, setTaskslist} = useTasks()
   const [task,setTask] = React.useState({title: ''})
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask(
