@@ -8,7 +8,7 @@ import { useTasks } from '../context/TasksContext'
 
 function TaskPage() {
 
-  const {taskslist, setTaskslist} = useTasks()
+  const {taskslist, setTaskslist, addTask, deleteTask} = useTasks()
   const [task,setTask] = React.useState({title: ''})
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask(
@@ -24,17 +24,12 @@ if (!trimmedTitle) {
   alert('Task title cannot be empty')
   return
 }
-    setTaskslist(prev => ([...prev, {
-        id: Date.now(),
-        title: trimmedTitle,
-        completed: false,
-        createdAt: Date.now(),
-    }]))
+   addTask(task.title)
     setTask({title: ''})
 }
 
 const handleDelete = (id: number) => {
-    setTaskslist(prev => prev.filter(t => t.id !== id))
+    deleteTask(id)
 }
   console.log('TaskPage rendered', task,taskslist)
     return (
