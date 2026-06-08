@@ -1,8 +1,6 @@
 import React from 'react'
-import type { Task } from '../types/task.type'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
-import { useLocalStorage } from '../hooks/TaskStorage.hook'
 import { Link } from '@tanstack/react-router'
 import { useTasks } from '../context/TasksContext'
 

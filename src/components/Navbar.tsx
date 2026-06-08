@@ -9,7 +9,9 @@ export default function Navbar() {
       <Link activeProps={{ className: 'active' }}  to="/tasks">
         Tasks
       </Link>
-      
+      <Link activeProps={{ className: 'active' }}  to="/team">
+        Team
+      </Link>
       <Link activeProps={{ className: 'active' }} to="/register">
         Register
       </Link>
