@@ -22,7 +22,7 @@ function TeamPage() {
   // 1. Calculate filtered users first
   const filteredUsers = React.useMemo(() => {
     if (!debouncedSearchTerm) return users;
-    
+    console.log("Filtering users with search term:", debouncedSearchTerm);
     return users.filter(
       (user: User) =>
         user.name.toLowerCase().includes(debouncedSearchTerm) ||
@@ -34,11 +34,10 @@ function TeamPage() {
 
   const parentRef = React.useRef<HTMLDivElement>(null);
 
-  // 2. Initialize Virtualizer based on filtered lists data length
   const virtualizer = useVirtualizer({
     count: filteredUsers.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 100, // Balanced baseline height guess for a user card profile
+    estimateSize: () => 100, 
     overscan: 3,
   });
 
@@ -55,28 +54,28 @@ function TeamPage() {
         onSearchTermChange={handleSearchChange}
       />
 
-      {/* Outer Scroll Container */}
       <div
+      ref={parentRef}
       className="h-96 overflow-auto border border-gray-300 mt-4" 
-        ref={parentRef} 
         
       >
-        {/* Inner Tracking Wrapper - Keeps track of full canvas scroll height */}
         <div 
           ref={virtualizer.containerRef} 
-          className="relative h-full w-full"
+          style={{
+    height: `${virtualizer.getTotalSize()}px`,
+    position: "relative",
+  }}
         
         >
           {virtualizer.getVirtualItems().map((item) => {
             // Extract genuine user node using row positional pointer index mapping
             const user = filteredUsers[item.index];
-            
             if (!user) return null;
 
             return (
               <div
                 key={item.key}
-                ref={virtualizer.measureElement}
+                 ref={virtualizer.measureElement}
                 data-index={item.index}
                 style={{
                   position: 'absolute',
@@ -87,7 +86,6 @@ function TeamPage() {
                   transform: `translateY(${item.start}px)`,
                 }}
               >
-                {/* Correctly passing the user entity object data to the card item */}
                 <UserCard user={user} />
                 
               </div>
