@@ -1,9 +1,13 @@
 export interface User {
   id: number
-  firstname: string
-  lastname: string
+  firstName: string
+  lastName: string
   email: string
   image: string
   phone: string
- 
+  address: {
+    address: string
+  }
+  country: string
+
 }

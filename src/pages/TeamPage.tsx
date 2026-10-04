@@ -5,7 +5,7 @@ import { useDebounce } from "../hooks/Debouncing.hook";
 import UserCard from "../components/UserCard";
 import UserSearch from "../components/UserSearch";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { CircleUser, Mail, Phone, X } from "lucide-react";
+import { CircleUser, Globe, Mail, MapPinned, Phone, X } from "lucide-react";
 
 function TeamPage() {
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -17,6 +17,8 @@ function TeamPage() {
     lastname: string;
     image: string;
     phone: string;
+    address:string;
+    country:string;
   } | null>(null);
   console.log(clickedUserdata, "Data for clicked user");
   const [clickedUser, setClickedUser] = React.useState(false);
@@ -78,9 +80,9 @@ function TeamPage() {
           User Details
         </div>
         <hr className="mx-4"></hr>
-        <div className=" flex flex-col gap-6  p-2 text-white font-bold text-md md:text-lg lg:text-xl transition-transform duration-75 ease-in-out">
-          <img
-            className=" border-2 rounded-full w-20 h-20 md:w-40 md:h-40 lg:w-60 lg:h-60 m-auto"
+        <div className=" flex  flex-col gap-6  p-2 m-4 bg-gray-900  h-[90%] border rounded flex-1 text-white font-bold text-md md:text-lg lg:text-xl transition-transform duration-75 ease-in-out">
+           <img
+            className=" border-2 rounded-full w-20 h-20 md:w-40 md:h-40 lg:w-60 lg:h-60 mx-auto"
             src={clickedUserdata?.image}
             alt="User Image"
           />
@@ -95,6 +97,14 @@ function TeamPage() {
             <Phone className="shrink-0" />
             <span>:{clickedUserdata?.phone}</span>
           </span>
+          <span className="flex items-center gap-2  break-all border rounded p-2 text-md md:text-lg lg:text-xl font-bold ">
+            <MapPinned className="shrink-0"/>
+            <span>:{clickedUserdata?.address}</span>
+          </span> 
+          <span className="flex items-center gap-2  break-all border rounded p-2 text-md md:text-lg lg:text-xl font-bold ">
+            <Globe className="shrink-0"  />
+            <span>:{clickedUserdata?.country}</span>
+          </span>  
 
           {/* <span>  
         ID:{clickedUserdata?.id}
