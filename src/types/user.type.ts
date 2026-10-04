@@ -1,9 +1,9 @@
 export interface User {
   id: number
-  name: string
+  firstname: string
+  lastname: string
   email: string
-  website: string
-  company: {
-    name: string
-  }
+  image: string
+  phone: string
+ 
 }

@@ -5,15 +5,23 @@ import { useDebounce } from "../hooks/Debouncing.hook";
 import UserCard from "../components/UserCard";
 import UserSearch from "../components/UserSearch";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { CircleUser, Mail, Phone, X } from "lucide-react";
 
 function TeamPage() {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [click, setClick] = React.useState(false);
-  const [clickedUserId, setClickedUserId] = React.useState<string | null>(null);  
+  const [clickedUserdata, setClickedUserdata] = React.useState<{
+    email: string;
+    id: number;
+    firstname: string;
+    lastname: string;
+    image: string;
+    phone: string;
+  } | null>(null);
+  console.log(clickedUserdata, "Data for clicked user");
   const [clickedUser, setClickedUser] = React.useState(false);
   const { data, isLoading, error } = useUsers();
-  const users = data ?? [];
-
+  const users = data?.users ?? [];
   const handleSearchChange = React.useCallback((value: string) => {
     setSearchTerm(value);
   }, []);
@@ -25,10 +33,10 @@ function TeamPage() {
     console.log("Filtering users with search term:", debouncedSearchTerm);
     return users.filter(
       (user: User) =>
-        user.name.toLowerCase().includes(debouncedSearchTerm) ||
+        user.firstname.toLowerCase().includes(debouncedSearchTerm) ||
+        user.lastname.toLowerCase().includes(debouncedSearchTerm) ||
         user.email.toLowerCase().includes(debouncedSearchTerm) ||
-        user.company?.name?.toLowerCase().includes(debouncedSearchTerm) ||
-        user.website?.toLowerCase().includes(debouncedSearchTerm)
+        user.phone.toLowerCase().includes(debouncedSearchTerm),
     );
   }, [users, debouncedSearchTerm]);
 
@@ -37,7 +45,7 @@ function TeamPage() {
   const virtualizer = useVirtualizer({
     count: filteredUsers.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 100, 
+    estimateSize: () => 100,
     overscan: 3,
   });
 
@@ -48,29 +56,61 @@ function TeamPage() {
     <div>
       <button onClick={() => setClick((prev) => !prev)}>Click Me</button>
       <span> clicked: {click.toString()}</span>
-      <div>ClickedUSerID: {clickedUserId}</div>
-      
+      {/* <div>ClickedUSerID: {clickedUserId}</div> */}
+
       <UserSearch
         searchTerm={searchTerm}
         onSearchTermChange={handleSearchChange}
       />
-      <div className={"bg-gray-200 rounded  w-[30%] h-screen fixed top-0 right-0 z-40 transition-transform duration-75 ease-in-out" + (clickedUser ? " translate-x-0" : " translate-x-full")}>
-  <div className="absolute top-4 right-4 text-white text-2xl font-bold cursor-pointer" onClick={() => setClickedUser(false)}>X</div>
-  <div className="text-white text-2xl font-bold m-4">User Details</div>
-  {clickedUserId}
-</div>
       <div
-      ref={parentRef}
-      className="h-96 overflow-auto border border-gray-300 mt-4" 
-        
+        className={
+          "bg-gray-800 rounded  w-[50%] md:w-[30%] h-screen fixed top-0 right-0 z-40 transition-transform duration-75 ease-in-out" +
+          (clickedUser ? " translate-x-0" : " translate-x-full")
+        }
       >
-        <div 
-          ref={virtualizer.containerRef} 
+        <div
+          className=" absolute top-4 right-4 text-white md:text-lg font-bold cursor-pointer border rounded"
+          onClick={() => setClickedUser(false)}
+        >
+          <X />
+        </div>
+        <div className="flex gap-2 text-white text-md lg:text-2xl font-bold m-4">
+          User Details
+        </div>
+        <hr className="mx-4"></hr>
+        <div className=" flex flex-col gap-6  p-2 text-white font-bold text-md md:text-lg lg:text-xl transition-transform duration-75 ease-in-out">
+          <img
+            className=" border-2 rounded-full w-20 h-20 md:w-40 md:h-40 lg:w-60 lg:h-60 m-auto"
+            src={clickedUserdata?.image}
+            alt="User Image"
+          />
+          <span className="text-md md:text-lg lg:text-xl font-bold mx-auto">
+            {clickedUserdata?.firstname} {clickedUserdata?.lastname}
+          </span>
+          <span className="flex items-center gap-2  break-all border rounded p-2 text-md md:text-lg lg:text-xl font-bold ">
+            <Mail className="shrink-0" />
+            <span>:{clickedUserdata?.email}</span>
+          </span>
+          <span className="flex items-center gap-2  break-all border rounded p-2 text-md md:text-lg lg:text-xl font-bold ">
+            <Phone className="shrink-0" />
+            <span>:{clickedUserdata?.phone}</span>
+          </span>
+
+          {/* <span>  
+        ID:{clickedUserdata?.id}
+      </span> */}
+        </div>
+      </div>
+      <div
+        ref={parentRef}
+        className="h-96 overflow-auto border border-gray-300 mt-4"
+      >
+        <div
+          ref={virtualizer.containerRef}
           style={{
-    height: `${virtualizer.getTotalSize()}px`,
-    position: "relative",
-  }}
-        
+            height: `${virtualizer.getTotalSize()}px`,
+            position: "relative",
+          }}
         >
           {virtualizer.getVirtualItems().map((item) => {
             // Extract genuine user node using row positional pointer index mapping
@@ -80,19 +120,22 @@ function TeamPage() {
             return (
               <div
                 key={item.key}
-                 ref={virtualizer.measureElement}
+                ref={virtualizer.measureElement}
                 data-index={item.index}
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   top: 0,
                   left: 0,
-                  width: '100%',
+                  width: "100%",
                   // Translate row positioning based on dynamic virtualization calculations
                   transform: `translateY(${item.start}px)`,
                 }}
               >
-                <UserCard setClickedUser={setClickedUser} setClickedUserId={setClickedUserId} user={user} />
-                
+                <UserCard
+                  setClickedUser={setClickedUser}
+                  setClickedUserdata={setClickedUserdata}
+                  user={user}
+                />
               </div>
             );
           })}
