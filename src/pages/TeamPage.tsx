@@ -54,7 +54,7 @@ function TeamPage() {
         searchTerm={searchTerm}
         onSearchTermChange={handleSearchChange}
       />
-      <div className={"bg-gray-800 w-[30%] h-screen fixed top-0 right-0 z-40 transition-transform duration-75 ease-in-out" + (clickedUser ? " translate-x-0" : " translate-x-full")}>
+      <div className={"bg-gray-200 rounded  w-[30%] h-screen fixed top-0 right-0 z-40 transition-transform duration-75 ease-in-out" + (clickedUser ? " translate-x-0" : " translate-x-full")}>
   <div className="absolute top-4 right-4 text-white text-2xl font-bold cursor-pointer" onClick={() => setClickedUser(false)}>X</div>
   <div className="text-white text-2xl font-bold m-4">User Details</div>
   {clickedUserId}

@@ -29,10 +29,10 @@ export default function Navbar() {
           Menu
         </button>
       </div>
-      <div
+       <div
         className={
-          "md:hidden flex flex-col gap-2  z-50 fixed inset-0 bg-gray-800 transition-transform duration-300 ease-in-out " +
-          (isMenuOpen ? "translate-x-0" : "translate-x-100")
+          "md:hidden flex flex-col gap-2  z-50 fixed top-0 w-screen h-screen bg-gray-600 transition-transform duration-300 ease-in-out " +
+          (isMenuOpen ? "translate-x-0" : "translate-x-full")
         }
       >
         <div
@@ -60,7 +60,7 @@ export default function Navbar() {
         </Link>
         </div>
         
-      </div>
+      </div> 
     </nav>
   );
 }
