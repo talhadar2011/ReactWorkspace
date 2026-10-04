@@ -32,7 +32,7 @@ export default function Navbar() {
       <div
         className={
           "md:hidden flex flex-col gap-2  z-50 fixed inset-0 bg-gray-800 transition-transform duration-300 ease-in-out " +
-          (isMenuOpen ? "translate-x-0" : "translate-x-full")
+          (isMenuOpen ? "translate-x-0" : "translate-x-100")
         }
       >
         <div
